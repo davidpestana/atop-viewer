@@ -60,6 +60,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Install validation tools
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq desktop-file-utils xvfb atop
+
       - name: Validate installers before release
         run: npm run validate:packages
 
