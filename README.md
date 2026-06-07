@@ -1,81 +1,81 @@
 # Atop Viewer
 
-Explorador gráfico de logs [atop](https://www.atoptool.nl/) para Linux.
+Graphical explorer for Linux [atop](https://www.atoptool.nl/) performance logs.
 
-**Estado:** beta (`0.0.x`) · **Licencia:** [MIT](LICENSE)
+**Status:** beta (`0.0.x`) · **License:** [MIT](LICENSE)
 
-- **Descargas:** [davidpestana.github.io/atop-viewer](https://davidpestana.github.io/atop-viewer/)
+- **Downloads:** [davidpestana.github.io/atop-viewer](https://davidpestana.github.io/atop-viewer/)
 - **Releases:** [GitHub Releases](https://github.com/davidpestana/atop-viewer/releases)
 
-## Requisitos
+## Requirements
 
-| Componente | Detalle |
-|------------|---------|
-| Sistema | Linux (Ubuntu/Debian probado; otras distros vía AppImage) |
-| `atop` | Instalado y activo, escribiendo en `/var/log/atop/atop_YYYYMMDD` |
-| Permisos | Lectura de logs atop (usuario en grupo adecuado o root) |
+| Component | Details |
+|-----------|---------|
+| OS | Linux (Ubuntu/Debian tested; other distros via AppImage) |
+| `atop` | Installed and running, writing to `/var/log/atop/atop_YYYYMMDD` |
+| Permissions | Read access to atop logs (appropriate group or root) |
 
 ```bash
 sudo apt install atop
 sudo systemctl enable --now atop
 ```
 
-Comprueba el intervalo de muestreo:
+Check the sampling interval:
 
 ```bash
 grep LOGINTERVAL /etc/default/atop
-# Ejemplo: LOGINTERVAL=600  → una muestra cada 10 minutos
+# Example: LOGINTERVAL=600  → one sample every 10 minutes
 ```
 
-## Instalación (usuarios)
+## Installation
 
 ### Ubuntu / Debian (.deb)
 
-1. Descarga el `.deb` desde [GitHub Pages](https://davidpestana.github.io/atop-viewer/) o [Releases](https://github.com/davidpestana/atop-viewer/releases).
-2. Instala:
+1. Download the `.deb` from [GitHub Pages](https://davidpestana.github.io/atop-viewer/) or [Releases](https://github.com/davidpestana/atop-viewer/releases).
+2. Install:
 
 ```bash
 sudo apt install ./atop-viewer-0.0.1-beta-amd64.deb
 ```
 
-3. Lanza la aplicación:
+3. Launch the app:
 
 ```bash
 atop-viewer
 ```
 
-También debería aparecer en el menú de aplicaciones como **Atop Viewer**.
+It should also appear in the application menu as **Atop Viewer**.
 
-### Otras distribuciones Linux (AppImage)
+### Other Linux distributions (AppImage)
 
 ```bash
 chmod +x atop-viewer-*-x86_64.AppImage
 ./atop-viewer-*-x86_64.AppImage
 ```
 
-AppImage es portable; necesitas `atop` instalado por separado. En algunas distros hace falta `libfuse2`.
+AppImage is portable; you still need `atop` installed separately. Some distros require `libfuse2`.
 
-### Actualizar
+### Updating
 
-Descarga la nueva versión beta desde la página de descargas o Releases e instala encima (`.deb`) o sustituye el AppImage.
+Download the latest beta from the download page or Releases and reinstall (`.deb`) or replace the AppImage.
 
-## Uso de la aplicación
+## Using the app
 
-1. **Selecciona un log diario** (`atop_YYYYMMDD`) en el desplegable superior.
-2. **Explora el histórico** con el slider temporal (~intervalo de atop).
-3. **Gráficas de sistema:** load, CPU y memoria por muestra.
-4. **Tabla de procesos** del intervalo seleccionado, con estado vivo (Vivo / Terminado / PID reutilizado).
-5. **Modo En vivo:** la app sondea el fichero cada 15 s y refresca cuando atop escribe una muestra nueva (no puede ir más rápido que `LOGINTERVAL`).
-6. **Líneas temporales:** heatmap, stack y ciclo de vida de los procesos más relevantes.
-7. **Ajustes** (panel «Relevancia en interfaz»): filtro CPU mínimo, filas máximas, top N del timeline, idioma ES/EN. Se guardan en `~/.config/atop-viewer/settings.json`.
+1. **Pick a daily log** (`atop_YYYYMMDD`) from the top dropdown.
+2. **Browse history** with the time slider (~atop interval).
+3. **System charts:** load, CPU, and memory per sample.
+4. **Process table** for the selected interval, with live status (Live / Terminated / PID reused).
+5. **Live mode:** polls the log file every 15 s and refreshes when atop writes a new sample (cannot go faster than `LOGINTERVAL`).
+6. **Process timelines:** heatmap, stack, and lifecycle for top processes.
+7. **Settings** (“UI relevance” panel): minimum CPU filter, max rows, timeline top N, locale ES/EN. Stored in `~/.config/atop-viewer/settings.json`.
 
-### Nota sobre procesos «ocultos»
+### Hidden processes
 
-Por defecto se ocultan procesos con CPU &lt; 0,05 % en la muestra. Pon **CPU mínima 0 %** en ajustes para ver todos (p. ej. procesos idle como editores en segundo plano).
+By default, processes below **0.05% CPU** in a sample are filtered out. Set **minimum CPU to 0%** in settings to show all (e.g. idle background editors).
 
-## Desarrollo
+## Development
 
-Requisitos: **Node.js 20+**, npm, atop en el sistema.
+Requires **Node.js 20+**, npm, and atop on the system.
 
 ```bash
 git clone https://github.com/davidpestana/atop-viewer.git
@@ -84,7 +84,7 @@ npm install
 npm run dev
 ```
 
-Si Electron no abre desde la terminal integrada de Cursor (GTK/Wayland), usa una terminal externa o:
+If Electron fails to open from the Cursor integrated terminal (GTK/Wayland), use an external terminal or:
 
 ```bash
 bash scripts/run.sh dev
@@ -92,59 +92,59 @@ bash scripts/run.sh dev
 
 ### Scripts
 
-| Comando | Descripción |
+| Command | Description |
 |---------|-------------|
-| `npm run dev` | Desarrollo con hot reload |
-| `npm run build` | Compila main, preload y renderer |
-| `npm start` | Ejecuta build de producción local |
-| `npm run dist:linux` | Genera `.deb` y `.AppImage` en `dist/` |
+| `npm run dev` | Development with hot reload |
+| `npm run build` | Build main, preload, and renderer |
+| `npm start` | Run local production build |
+| `npm run dist:linux` | Build `.deb` and `.AppImage` in `dist/` |
 
-## CI/CD y releases beta
+## CI/CD and beta releases
 
-- **CI** (`.github/workflows/ci.yml`): build en cada push/PR a `main`.
-- **Release** (`.github/workflows/release.yml`): al etiquetar `v0.0.x` o `v0.0.x-beta` construye instaladores Linux, publica un **pre-release** en GitHub y despliega la [página de descargas](https://davidpestana.github.io/atop-viewer/).
+- **CI** (`.github/workflows/ci.yml`): build on every push/PR to `main` or `master`.
+- **Release** (`.github/workflows/release.yml`): on tag `v0.0.x` or `v0.0.x-beta`, builds Linux installers, publishes a **pre-release** on GitHub, and deploys the [download page](https://davidpestana.github.io/atop-viewer/).
 
-### Publicar una versión beta
+### Publishing a beta version
 
 ```bash
-# Actualiza version en package.json (ej. 0.0.2-beta), commit, luego:
+# Bump version in package.json (e.g. 0.0.2-beta), commit, then:
 git tag v0.0.2-beta
-git push origin main
+git push origin master
 git push origin v0.0.2-beta
 ```
 
-O dispara manualmente **Actions → Release → Run workflow** e indica la versión (p. ej. `0.0.2-beta`).
+Or run **Actions → Release → Run workflow** manually (e.g. version `0.0.2-beta`).
 
-Convención: series `0.0.x-beta` hasta estabilizar el MVP.
+Convention: `0.0.x-beta` until the MVP stabilizes.
 
 ### GitHub Pages
 
-Tras el primer release, activa Pages en el repo si no se configuró solo:
+After the first release, enable Pages if needed:
 
 **Settings → Pages → Build and deployment → GitHub Actions**
 
-La URL será `https://<usuario>.github.io/atop-viewer/`.
+URL: `https://<user>.github.io/atop-viewer/`
 
-## Cómo funciona atop
+## How atop works
 
-`atop` es un agente de muestreo gestionado por systemd:
+`atop` is a sampling agent managed by systemd:
 
 ```bash
 atop -w /var/log/atop/atop_YYYYMMDD <LOGINTERVAL>
 ```
 
-Cada muestra guarda CPU, load, memoria, procesos, disco, red, etc. La app lee logs con `atop -r … -J …` (sin reimplementar el formato binario).
+Each sample stores CPU, load, memory, processes, disk, network, etc. The app reads logs via `atop -r … -J …` (no custom binary parser).
 
-## Estructura del proyecto
+## Project layout
 
 ```text
-electron/          Proceso main, parser atop, settings, servicios en vivo
-src/               UI React (gráficas, tablas, i18n)
-docs/              Sitio estático de descargas (GitHub Pages)
-.github/workflows/ CI y release
-scripts/run.sh     Arranque con entorno limpio en Linux
+electron/          Main process, atop parser, settings, live services
+src/               React UI (charts, tables, i18n)
+docs/              Static download site (GitHub Pages, EN/ES)
+.github/workflows/ CI and release
+scripts/run.sh     Clean-environment launcher on Linux
 ```
 
-## Licencia
+## License
 
-[MIT](LICENSE) — software libre y de código abierto.
+[MIT](LICENSE) — free and open source software.
