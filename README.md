@@ -1,97 +1,142 @@
 # Atop Viewer
 
-Graphical explorer for Linux [atop](https://www.atoptool.nl/) performance logs.
+**Desktop GUI for Linux [atop](https://www.atoptool.nl/) historical logs** — atop log analyzer, atop visualizer, performance forensics.
+
+> **Not a browser app.** Linux desktop application (Electron). Requires **`atop` installed** on the same machine. Reads logs via `atop -r … -J …` (no custom binary parser, no `atop -P` step).
 
 **Status:** beta (`0.0.x`) · **License:** [MIT](LICENSE)
 
-- **Downloads:** [davidpestana.github.io/atop-viewer](https://davidpestana.github.io/atop-viewer/)
-- **Releases:** [GitHub Releases](https://github.com/davidpestana/atop-viewer/releases)
+| | |
+|---|---|
+| **Download** | [davidpestana.github.io/atop-viewer](https://davidpestana.github.io/atop-viewer/) |
+| **Releases** | [GitHub Releases](https://github.com/davidpestana/atop-viewer/releases) |
+| **Source** | [github.com/davidpestana/atop-viewer](https://github.com/davidpestana/atop-viewer) |
 
-## Requirements
+---
 
-| Component | Details |
-|-----------|---------|
-| OS | Linux (Ubuntu/Debian tested; other distros via AppImage) |
-| `atop` | Installed and running, writing to `/var/log/atop/atop_YYYYMMDD` |
-| Permissions | Read access to atop logs (appropriate group or root) |
+## What it does
+
+Turn daily atop binary logs (`/var/log/atop/atop_YYYYMMDD`) into an explorable UI for **Linux admins, SRE, DevOps, and platform engineers**:
+
+- **Time slider** across atop samples (load, CPU, memory charts)
+- **Process table** with live status (running / terminated / PID reused)
+- **Live mode** — polls the log every 15 s when atop writes a new sample
+- **Process timelines** — heatmap, stack, lifecycle for top processes
+- **Configurable filters** — CPU threshold, row limits, timeline top N
+- **ES / EN** UI locale
+- **Local only** — data stays on your machine; no upload server
+
+### How parsing works
+
+```
+/var/log/atop/atop_YYYYMMDD  →  atop -r LOG -J JSON  →  Atop Viewer UI
+```
+
+The app shells out to `/usr/bin/atop`. It does **not** parse raw `.atop` binaries in JavaScript and does **not** require converting logs with `atop -P` first.
+
+---
+
+## Screenshots
+
+Record a short demo from the running app and save as [`docs/assets/demo.gif`](docs/assets/demo.gif) for README and GitHub Pages.
+
+![Atop Viewer — demo placeholder](docs/assets/demo.svg)
+
+*Replace `docs/assets/demo.svg` with a real GIF when ready (`ffmpeg` / `peek` / OBS).*
+
+---
+
+## Quick start
+
+### 1. Install atop (if needed)
 
 ```bash
 sudo apt install atop
 sudo systemctl enable --now atop
+grep LOGINTERVAL /etc/default/atop   # e.g. 600 = one sample every 10 min
 ```
 
-Check the sampling interval:
+### 2. Install Atop Viewer
+
+Download the latest `.deb` from [Releases](https://github.com/davidpestana/atop-viewer/releases) or [GitHub Pages](https://davidpestana.github.io/atop-viewer/).
+
+**Recommended** (avoids apt `_apt` warnings when the file is in `$HOME`):
 
 ```bash
-grep LOGINTERVAL /etc/default/atop
-# Example: LOGINTERVAL=600  → one sample every 10 minutes
-```
-
-## Installation
-
-### Ubuntu / Debian (.deb)
-
-1. Download the `.deb` from [GitHub Pages](https://davidpestana.github.io/atop-viewer/) or [Releases](https://github.com/davidpestana/atop-viewer/releases).
-2. Install (recommended — avoids apt `_apt` noise when the file is in `$HOME`):
-
-```bash
-sudo dpkg -i ~/atop-viewer-0.0.6-beta-amd64.deb
-sudo apt -f install   # only if dpkg reports missing dependencies
+sudo dpkg -i ~/atop-viewer-0.0.7-beta-amd64.deb
+sudo apt -f install   # only if dependencies are missing
 ```
 
 Alternative:
 
 ```bash
-cp ~/atop-viewer-0.0.6-beta-amd64.deb /tmp/
-sudo apt install /tmp/atop-viewer-0.0.6-beta-amd64.deb
+cp ~/atop-viewer-*-beta-amd64.deb /tmp/
+sudo apt install /tmp/atop-viewer-*-beta-amd64.deb
 ```
 
-**Note:** `sudo apt install ./file.deb` from your home directory may print:
+> **Note:** `sudo apt install ./file.deb` from `$HOME` may print an `_apt` / *Permiso denegado* **information** line. That is **not** a failed install if you see `Configurando atop-viewer` and `ii` in `dpkg -l atop-viewer`.
 
-```text
-Información: ... el usuario '_apt' ... Permiso denegado
-```
-
-That is **not a failed install**. Apt cannot sandbox-read `$HOME` (mode `750`), falls back to root, and the package still configures — look for `Configurando atop-viewer` and `ii` in `dpkg -l atop-viewer`. Prefer `dpkg -i` above.
-
-3. Launch the app:
+### 3. Launch
 
 ```bash
 atop-viewer
 ```
 
-It should also appear in the application menu as **Atop Viewer**.
+Or open **Atop Viewer** from the GNOME application menu.
 
-### Other Linux distributions (AppImage)
+**AppImage** (other distros): see [Releases](https://github.com/davidpestana/atop-viewer/releases) — still requires `atop` and often `libfuse2`.
 
-```bash
-chmod +x atop-viewer-*-x86_64.AppImage
-./atop-viewer-*-x86_64.AppImage
-```
-
-AppImage is portable; you still need `atop` installed separately. Some distros require `libfuse2`.
-
-### Updating
-
-Download the latest beta from the download page or Releases and reinstall (`.deb`) or replace the AppImage.
+---
 
 ## Using the app
 
-1. **Pick a daily log** (`atop_YYYYMMDD`) from the top dropdown.
-2. **Browse history** with the time slider (~atop interval).
-3. **System charts:** load, CPU, and memory per sample.
-4. **Process table** for the selected interval, with live status (Live / Terminated / PID reused).
-5. **Live mode:** polls the log file every 15 s and refreshes when atop writes a new sample (cannot go faster than `LOGINTERVAL`).
-6. **Process timelines:** heatmap, stack, and lifecycle for top processes.
-7. **Settings** (“UI relevance” panel): minimum CPU filter, max rows, timeline top N, locale ES/EN. Stored in `~/.config/atop-viewer/settings.json`.
+1. Pick a daily log (`atop_YYYYMMDD`) in the dropdown.
+2. Move the **time slider** to inspect a sample interval.
+3. Review **system charts** (load, CPU, memory).
+4. Inspect the **process table** for that interval.
+5. Enable **Live** to follow the current day's log (refresh bounded by atop's `LOGINTERVAL`).
+6. Open **Settings** (*UI relevance*) to tune filters and locale.
 
-### Hidden processes
+By default, processes below **0.05% CPU** in a sample are hidden. Set **minimum CPU to 0%** to show idle workloads.
 
-By default, processes below **0.05% CPU** in a sample are filtered out. Set **minimum CPU to 0%** in settings to show all (e.g. idle background editors).
+---
+
+## Requirements
+
+| | |
+|---|---|
+| **OS** | Linux (Ubuntu/Debian tested; AppImage for others) |
+| **atop** | Installed, writing to `/var/log/atop/` |
+| **Permissions** | Read access to atop logs (user/group or root) |
+| **Display** | X11/Wayland desktop (GNOME tested) |
+
+---
+
+## Limitations (beta)
+
+- **Linux desktop only** — not a web UI, not Windows/macOS.
+- **Requires atop CLI** on the host — cannot open arbitrary `.atop` files from USB unless readable and passed via atop.
+- **Default log path** — `/var/log/atop/atop_YYYYMMDD` (system atop layout).
+- **Live refresh** cannot exceed atop's sampling interval (`LOGINTERVAL`, often 600 s).
+- **Beta packaging** — `.deb` / AppImage for amd64; APIs and settings may change.
+- **No built-in telemetry** — project visibility is via GitHub stars / your feedback.
+
+---
+
+## Roadmap
+
+- [ ] Open user-selected log files (not only `/var/log/atop`)
+- [ ] Disk and network charts from atop JSON labels
+- [ ] Export sample / process data (CSV, JSON)
+- [ ] Demo GIF and incident walkthrough article
+- [ ] Mention in [Atoptool](https://github.com/Atoptool/atop) docs / discussions
+- [ ] Stable `1.0` after broader distro testing
+
+---
 
 ## Development
 
-Requires **Node.js 20+**, npm, and atop on the system.
+Requires **Node.js 20+**, npm, and atop.
 
 ```bash
 git clone https://github.com/davidpestana/atop-viewer.git
@@ -100,85 +145,34 @@ npm install
 npm run dev
 ```
 
-If Electron fails to open from the Cursor integrated terminal (GTK/Wayland), use an external terminal or:
+If Electron fails from an IDE terminal (GTK/Wayland):
 
 ```bash
 bash scripts/run.sh dev
 ```
 
-### Scripts
-
 | Command | Description |
 |---------|-------------|
 | `npm run dev` | Development with hot reload |
-| `npm run build` | Build main, preload, and renderer |
-| `npm start` | Run local production build |
-| `npm run dist:linux` | Build `.deb` and `.AppImage` in `dist/` |
-| `npm run validate:packages` | Validate built installers (desktop file, postinst, Docker smoke test) |
-| `npm run dist:linux:check` | Build + validate before publishing or manual install |
+| `npm run build` | Build main, preload, renderer |
+| `npm run dist:linux:check` | Build installers + validate package |
+| `npm run clean:artifacts` | Remove old `dist/` artifacts |
 
-### Validate a `.deb` before installing
+---
 
-Build and run automated checks (including a clean Ubuntu container install + launch under Xvfb):
+## CI/CD
 
-```bash
-npm run dist:linux:check
-```
+- **CI** — build + package validation on push/PR.
+- **Release** — tag `v0.0.x-beta` → `.deb` + AppImage + [download page](https://davidpestana.github.io/atop-viewer/) update.
 
-Or validate an existing package:
+---
 
-```bash
-npm run validate:deb -- dist/atop-viewer-0.0.4-beta-amd64.deb
-```
+## Keywords
 
-CI runs the same validation on every push; releases are blocked if it fails.
+atop viewer · atop log analyzer · atop visualizer · atop gui · linux performance monitoring · atop historical logs · electron linux · devops forensics · sre tooling
 
-## CI/CD and beta releases
-
-- **CI** (`.github/workflows/ci.yml`): build on every push/PR to `main` or `master`.
-- **Release** (`.github/workflows/release.yml`): on tag `v0.0.x` or `v0.0.x-beta`, builds Linux installers, publishes a **pre-release** on GitHub, and deploys the [download page](https://davidpestana.github.io/atop-viewer/).
-
-### Publishing a beta version
-
-```bash
-# Bump version in package.json (e.g. 0.0.2-beta), commit, then:
-git tag v0.0.2-beta
-git push origin master
-git push origin v0.0.2-beta
-```
-
-Or run **Actions → Release → Run workflow** manually (e.g. version `0.0.2-beta`).
-
-Convention: `0.0.x-beta` until the MVP stabilizes.
-
-### GitHub Pages
-
-After the first release, enable Pages if needed:
-
-**Settings → Pages → Build and deployment → GitHub Actions**
-
-URL: `https://<user>.github.io/atop-viewer/`
-
-## How atop works
-
-`atop` is a sampling agent managed by systemd:
-
-```bash
-atop -w /var/log/atop/atop_YYYYMMDD <LOGINTERVAL>
-```
-
-Each sample stores CPU, load, memory, processes, disk, network, etc. The app reads logs via `atop -r … -J …` (no custom binary parser).
-
-## Project layout
-
-```text
-electron/          Main process, atop parser, settings, live services
-src/               React UI (charts, tables, i18n)
-docs/              Static download site (GitHub Pages, EN/ES)
-.github/workflows/ CI and release
-scripts/run.sh     Clean-environment launcher on Linux
-```
+---
 
 ## License
 
-[MIT](LICENSE) — free and open source software.
+[MIT](LICENSE) — free and open source.

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-label="Atop Viewer screenshot placeholder">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a2332"/>
+      <stop offset="100%" stop-color="#0f1419"/>
+    </linearGradient>
+  </defs>
+  <rect width="960" height="540" fill="url(#bg)"/>
+  <rect x="24" y="24" width="912" height="48" rx="8" fill="#243044"/>
+  <text x="48" y="56" fill="#e7ecf3" font-family="system-ui,sans-serif" font-size="18" font-weight="600">Atop Viewer</text>
+  <rect x="24" y="88" width="560" height="200" rx="10" fill="#182030" stroke="#2a3648"/>
+  <polyline points="40,250 120,180 200,210 280,120 360,160 440,90 520,140" fill="none" stroke="#5b9cff" stroke-width="3"/>
+  <text x="40" y="120" fill="#9aa7b8" font-family="system-ui,sans-serif" font-size="14">CPU · load · memory (placeholder)</text>
+  <rect x="600" y="88" width="336" height="428" rx="10" fill="#182030" stroke="#2a3648"/>
+  <text x="620" y="120" fill="#9aa7b8" font-family="system-ui,sans-serif" font-size="14">Processes</text>
+  <rect x="24" y="304" width="560" height="212" rx="10" fill="#182030" stroke="#2a3648"/>
+  <text x="40" y="336" fill="#9aa7b8" font-family="system-ui,sans-serif" font-size="14">Timeline / live mode (placeholder)</text>
+  <text x="480" y="510" text-anchor="middle" fill="#5b9cff" font-family="system-ui,sans-serif" font-size="15">Replace with docs/assets/demo.gif  record from the real app</text>
+</svg>

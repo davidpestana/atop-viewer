@@ -3,10 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Atop Viewer — Downloads</title>
+    <title>Atop Viewer — Linux atop log analyzer (desktop app)</title>
     <meta
       name="description"
-      content="Graphical explorer for Linux atop logs. .deb and AppImage installers."
+      content="Atop Viewer — desktop GUI for Linux atop historical logs. Atop log analyzer and visualizer. Requires atop installed. Download .deb or AppImage."
+    />
+    <meta
+      name="keywords"
+      content="atop viewer, atop log analyzer, atop visualizer, atop gui, linux performance monitoring, electron, devops, sre, sysadmin"
     />
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -18,20 +22,32 @@
       </nav>
 
       <header class="hero">
-        <p id="badge" class="badge">Beta · open source (MIT)</p>
+        <p id="badge" class="badge">Beta · Linux desktop · MIT</p>
         <h1>Atop Viewer</h1>
-        <p id="lead" class="lead">
-          Explore daily <a href="https://www.atoptool.nl/">atop</a> logs: system charts, live mode,
-          processes, and timelines.
-        </p>
+        <p id="tagline" class="tagline"></p>
+        <p id="lead" class="lead"></p>
         <p id="version-line" class="version">Loading version…</p>
       </header>
 
+      <figure class="demo">
+        <img id="demo-img" src="assets/demo.svg" alt="" width="960" height="540" loading="lazy" />
+        <figcaption id="demo-caption"></figcaption>
+      </figure>
+
+      <section class="card">
+        <h2 id="features-title">Features</h2>
+        <ul id="features-list" class="feature-list"></ul>
+      </section>
+
+      <section class="card">
+        <h2 id="how-title">How it works</h2>
+        <pre id="how-code" class="code-block"><code></code></pre>
+        <p id="how-note" class="hint"></p>
+      </section>
+
       <section class="card">
         <h2 id="download-title">Download</h2>
-        <p id="download-hint" class="hint">
-          Requires <code>atop</code> on the system (<code>sudo apt install atop</code>).
-        </p>
+        <p id="download-hint" class="hint"></p>
         <div id="downloads" class="downloads">
           <p id="downloads-loading">Loading installers…</p>
         </div>
@@ -39,40 +55,31 @@
           <span id="also-on">Also on</span>
           <a id="release-link" href="https://github.com/davidpestana/atop-viewer/releases"
             >GitHub Releases</a
-          >.
+          > ·
+          <a id="readme-link" href="https://github.com/davidpestana/atop-viewer#readme">README</a>
         </p>
       </section>
 
       <section class="card">
         <h2 id="install-deb-title">Install on Ubuntu / Debian</h2>
-        <pre><code>sudo apt install ./atop-viewer-VERSION-amd64.deb
-atop-viewer</code></pre>
-        <p id="install-deb-note">
-          Replace <code>VERSION</code> with the downloaded release. The package depends on
-          <code>atop</code>.
-        </p>
+        <pre id="install-deb-code" class="code-block"><code></code></pre>
+        <p id="install-deb-note" class="hint"></p>
       </section>
 
       <section class="card">
         <h2 id="install-appimage-title">Other Linux distributions</h2>
-        <pre><code>chmod +x atop-viewer-VERSION-x86_64.AppImage
-./atop-viewer-VERSION-x86_64.AppImage</code></pre>
-        <p id="install-appimage-note">
-          AppImage needs no install step. Ensure <code>atop</code> and FUSE/libfuse2 are available on
-          your distro.
-        </p>
+        <pre id="install-appimage-code" class="code-block"><code></code></pre>
+        <p id="install-appimage-note" class="hint"></p>
       </section>
 
       <section class="card">
-        <h2 id="dev-title">Source code &amp; development</h2>
-        <p>
-          <span id="repo-label">Repository:</span>
-          <a href="https://github.com/davidpestana/atop-viewer">github.com/davidpestana/atop-viewer</a>
-        </p>
-        <pre><code>git clone https://github.com/davidpestana/atop-viewer.git
-cd atop-viewer
-npm install
-npm run dev</code></pre>
+        <h2 id="limits-title">Limitations</h2>
+        <ul id="limits-list" class="feature-list"></ul>
+      </section>
+
+      <section class="card">
+        <h2 id="roadmap-title">Roadmap</h2>
+        <ul id="roadmap-list" class="feature-list roadmap"></ul>
       </section>
 
       <footer class="footer">

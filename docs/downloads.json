@@ -1,20 +1,20 @@
 {
-  "version": "0.0.1-beta",
-  "tag": "v0.0.1-beta",
+  "version": "0.0.7-beta",
+  "tag": "v0.0.7-beta",
   "releasedAt": null,
   "prerelease": true,
   "repository": "davidpestana/atop-viewer",
   "assets": {
     "deb": {
-      "file": "atop-viewer-0.0.1-beta-amd64.deb",
-      "url": "https://github.com/davidpestana/atop-viewer/releases/download/v0.0.1-beta/atop-viewer-0.0.1-beta-amd64.deb",
+      "file": "atop-viewer-0.0.7-beta-amd64.deb",
+      "url": "https://github.com/davidpestana/atop-viewer/releases/download/v0.0.7-beta/atop-viewer-0.0.7-beta-amd64.deb",
       "label": "Debian/Ubuntu (.deb)"
     },
     "appimage": {
-      "file": "atop-viewer-0.0.1-beta-x86_64.AppImage",
-      "url": "https://github.com/davidpestana/atop-viewer/releases/download/v0.0.1-beta/atop-viewer-0.0.1-beta-x86_64.AppImage",
+      "file": "atop-viewer-0.0.7-beta-x86_64.AppImage",
+      "url": "https://github.com/davidpestana/atop-viewer/releases/download/v0.0.7-beta/atop-viewer-0.0.7-beta-x86_64.AppImage",
       "label": "AppImage (portable Linux)"
     }
   },
-  "releasePage": "https://github.com/davidpestana/atop-viewer/releases/tag/v0.0.1-beta"
+  "releasePage": "https://github.com/davidpestana/atop-viewer/releases/tag/v0.0.7-beta"
 }

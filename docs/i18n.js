@@ -3,29 +3,58 @@ const SITE_LOCALES = ['en', 'es']
 const SITE_MESSAGES = {
   en: {
     htmlLang: 'en',
-    pageTitle: 'Atop Viewer — Downloads',
+    pageTitle: 'Atop Viewer — Linux atop log analyzer (desktop app)',
     metaDescription:
-      'Graphical explorer for Linux atop logs. .deb and AppImage installers.',
-    badge: 'Beta · open source (MIT)',
+      'Atop Viewer — desktop GUI for Linux atop historical logs. Atop log analyzer and visualizer. Requires atop installed. Download .deb or AppImage.',
+    badge: 'Beta · Linux desktop · MIT',
+    tagline: 'Desktop GUI for Linux atop historical logs — not a browser app.',
     lead:
-      'Explore daily <a href="https://www.atoptool.nl/">atop</a> logs: system charts, live mode, processes, and timelines.',
+      'Explore daily <a href="https://www.atoptool.nl/">atop</a> logs with charts, live refresh, process tables, and timelines. Uses <code>atop -r -J</code> on your machine — data never leaves your system.',
     versionLoading: 'Loading version…',
-    versionLine: (v) => `Version ${v} (beta)`,
+    versionLine: (v) => `Latest release: ${v} (beta)`,
     versionFallback: 'Beta — see GitHub Releases',
+    demoCaption: 'Placeholder UI — replace docs/assets/demo.svg with a recorded demo.gif from the app.',
+    featuresTitle: 'Features',
+    features: [
+      'Time slider across atop samples (load, CPU, memory)',
+      'Process table with live / terminated / PID-reused status',
+      'Live mode when atop writes new samples',
+      'Process heatmap, stack, and lifecycle views',
+      'Configurable CPU filter and ES/EN UI',
+      'Local-only — no upload server'
+    ],
+    howTitle: 'How it works',
+    howCode: '/var/log/atop/atop_YYYYMMDD  →  atop -r LOG -J JSON  →  Atop Viewer',
+    howNote:
+      'Requires <code>atop</code> installed (<code>sudo apt install atop</code>). Does not parse binary logs in the browser and does not need <code>atop -P</code>.',
     downloadTitle: 'Download',
-    downloadHint:
-      'Requires <code>atop</code> on the system (<code>sudo apt install atop</code>).',
+    downloadHint: 'Linux amd64 · requires atop on the system.',
     downloadsLoading: 'Loading installers…',
     alsoOn: 'Also on',
     releaseLink: 'GitHub Releases',
+    readmeLink: 'README',
     installDebTitle: 'Install on Ubuntu / Debian',
+    installDebCode: 'sudo dpkg -i ~/atop-viewer-VERSION-amd64.deb\nsudo apt -f install   # if needed\natop-viewer',
     installDebNote:
-      'Replace <code>VERSION</code> with the downloaded release. The package depends on <code>atop</code>.',
+      'Prefer <code>dpkg -i</code> when the file is in <code>$HOME</code>. Replace VERSION with the downloaded beta tag.',
     installAppImageTitle: 'Other Linux distributions',
-    installAppImageNote:
-      'AppImage needs no install step. Ensure <code>atop</code> and FUSE/libfuse2 are available on your distro.',
-    devTitle: 'Source code & development',
-    repoLabel: 'Repository:',
+    installAppImageCode: 'chmod +x atop-viewer-VERSION-x86_64.AppImage\n./atop-viewer-VERSION-x86_64.AppImage',
+    installAppImageNote: 'Portable AppImage — still needs atop and often libfuse2.',
+    limitsTitle: 'Limitations (beta)',
+    limits: [
+      'Linux desktop only (Electron), not a web UI',
+      'Reads system atop logs under /var/log/atop by default',
+      'Live refresh bounded by atop LOGINTERVAL (often 10 min)',
+      'amd64 installers; beta APIs may change'
+    ],
+    roadmapTitle: 'Roadmap',
+    roadmap: [
+      'Open user-selected log files',
+      'Disk and network charts',
+      'Export CSV/JSON',
+      'Incident walkthrough article + demo GIF',
+      'Stable 1.0 after wider testing'
+    ],
     license: (url) => `License <a href="${url}">MIT</a>.`,
     debLabel: 'Debian/Ubuntu (.deb)',
     appImageLabel: 'AppImage (portable Linux)',
@@ -34,29 +63,58 @@ const SITE_MESSAGES = {
   },
   es: {
     htmlLang: 'es',
-    pageTitle: 'Atop Viewer — Descargas',
+    pageTitle: 'Atop Viewer — analizador visual de logs atop (app de escritorio Linux)',
     metaDescription:
-      'Explorador gráfico de logs atop para Linux. Instaladores .deb y AppImage.',
-    badge: 'Beta · software libre (MIT)',
+      'Atop Viewer — interfaz gráfica de escritorio para logs históricos de atop en Linux. Analizador y visualizador de logs atop. Requiere atop instalado.',
+    badge: 'Beta · escritorio Linux · MIT',
+    tagline: 'Interfaz de escritorio para logs históricos de atop — no es una app web.',
     lead:
-      'Visualiza logs diarios de <a href="https://www.atoptool.nl/">atop</a>: gráficas de sistema, modo en vivo, procesos y líneas temporales.',
+      'Explora logs diarios de <a href="https://www.atoptool.nl/">atop</a> con gráficas, modo en vivo, procesos y líneas temporales. Usa <code>atop -r -J</code> en tu máquina — los datos no salen del sistema.',
     versionLoading: 'Cargando versión…',
-    versionLine: (v) => `Versión ${v} (beta)`,
+    versionLine: (v) => `Última release: ${v} (beta)`,
     versionFallback: 'Versión beta — consulta GitHub Releases',
+    demoCaption: 'UI de ejemplo — sustituye docs/assets/demo.svg por un demo.gif grabado desde la app.',
+    featuresTitle: 'Características',
+    features: [
+      'Slider temporal sobre muestras atop (load, CPU, memoria)',
+      'Tabla de procesos con estado vivo / terminado / PID reutilizado',
+      'Modo en vivo cuando atop escribe una muestra nueva',
+      'Heatmap, stack y ciclo de vida de procesos',
+      'Filtro CPU configurable e interfaz ES/EN',
+      'Solo local — sin servidor de subida'
+    ],
+    howTitle: 'Cómo funciona',
+    howCode: '/var/log/atop/atop_YYYYMMDD  →  atop -r LOG -J JSON  →  Atop Viewer',
+    howNote:
+      'Requiere <code>atop</code> instalado (<code>sudo apt install atop</code>). No parsea binarios en el navegador ni necesita <code>atop -P</code>.',
     downloadTitle: 'Descargar',
-    downloadHint:
-      'Requiere <code>atop</code> instalado en el sistema (<code>sudo apt install atop</code>).',
+    downloadHint: 'Linux amd64 · requiere atop en el sistema.',
     downloadsLoading: 'Cargando instaladores…',
     alsoOn: 'También en',
     releaseLink: 'GitHub Releases',
+    readmeLink: 'README',
     installDebTitle: 'Instalar en Ubuntu / Debian',
+    installDebCode: 'sudo dpkg -i ~/atop-viewer-VERSION-amd64.deb\nsudo apt -f install   # si hace falta\natop-viewer',
     installDebNote:
-      'Sustituye <code>VERSION</code> por la versión descargada. El paquete declara dependencia de <code>atop</code>.',
+      'Mejor <code>dpkg -i</code> si el fichero está en <code>$HOME</code>. Sustituye VERSION por la beta descargada.',
     installAppImageTitle: 'Otras distribuciones Linux',
-    installAppImageNote:
-      'AppImage no requiere instalación. Asegúrate de tener <code>atop</code> y FUSE/libfuse2 según tu distro.',
-    devTitle: 'Código fuente y desarrollo',
-    repoLabel: 'Repositorio:',
+    installAppImageCode: 'chmod +x atop-viewer-VERSION-x86_64.AppImage\n./atop-viewer-VERSION-x86_64.AppImage',
+    installAppImageNote: 'AppImage portable — igualmente necesitas atop y a menudo libfuse2.',
+    limitsTitle: 'Limitaciones (beta)',
+    limits: [
+      'Solo escritorio Linux (Electron), no es una web',
+      'Lee logs atop del sistema en /var/log/atop por defecto',
+      'El modo en vivo depende del LOGINTERVAL de atop (a menudo 10 min)',
+      'Instaladores amd64; APIs beta pueden cambiar'
+    ],
+    roadmapTitle: 'Roadmap',
+    roadmap: [
+      'Abrir ficheros de log elegidos por el usuario',
+      'Gráficas de disco y red',
+      'Exportar CSV/JSON',
+      'Artículo de incidente + GIF demo',
+      'Estable 1.0 tras más pruebas en distros'
+    ],
     license: (url) => `Licencia <a href="${url}">MIT</a>.`,
     debLabel: 'Debian/Ubuntu (.deb)',
     appImageLabel: 'AppImage (portable Linux)',
@@ -78,6 +136,12 @@ function setSiteLocale(locale) {
   applySiteLocale(locale)
 }
 
+function renderList(id, items) {
+  const el = document.getElementById(id)
+  if (!el || !items) return
+  el.innerHTML = items.map((item) => `<li>${item}</li>`).join('')
+}
+
 function applySiteLocale(locale) {
   const t = SITE_MESSAGES[locale]
   document.documentElement.lang = t.htmlLang
@@ -86,27 +150,47 @@ function applySiteLocale(locale) {
   const meta = document.querySelector('meta[name="description"]')
   if (meta) meta.content = t.metaDescription
 
-  const map = {
+  const textMap = {
     badge: t.badge,
+    tagline: t.tagline,
     lead: t.lead,
+    'demo-caption': t.demoCaption,
+    'features-title': t.featuresTitle,
+    'how-title': t.howTitle,
+    'how-note': t.howNote,
     'download-title': t.downloadTitle,
     'download-hint': t.downloadHint,
     'also-on': t.alsoOn,
     'release-link': t.releaseLink,
+    'readme-link': t.readmeLink,
     'install-deb-title': t.installDebTitle,
     'install-deb-note': t.installDebNote,
     'install-appimage-title': t.installAppImageTitle,
     'install-appimage-note': t.installAppImageNote,
-    'dev-title': t.devTitle,
-    'repo-label': t.repoLabel
+    'limits-title': t.limitsTitle,
+    'roadmap-title': t.roadmapTitle
   }
 
-  for (const [id, html] of Object.entries(map)) {
+  for (const [id, html] of Object.entries(textMap)) {
     const el = document.getElementById(id)
     if (!el) continue
-    if (id === 'release-link') el.textContent = html
+    if (id === 'release-link' || id === 'readme-link') el.textContent = html
     else el.innerHTML = html
   }
+
+  const howCode = document.querySelector('#how-code code')
+  if (howCode) howCode.textContent = t.howCode
+  const debCode = document.querySelector('#install-deb-code code')
+  if (debCode) debCode.textContent = t.installDebCode
+  const appCode = document.querySelector('#install-appimage-code code')
+  if (appCode) appCode.textContent = t.installAppImageCode
+
+  const demoImg = document.getElementById('demo-img')
+  if (demoImg) demoImg.alt = t.pageTitle
+
+  renderList('features-list', t.features)
+  renderList('limits-list', t.limits)
+  renderList('roadmap-list', t.roadmap)
 
   document.getElementById('license-line').innerHTML = t.license(
     'https://github.com/davidpestana/atop-viewer/blob/master/LICENSE'

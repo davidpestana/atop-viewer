@@ -1,7 +1,20 @@
 {
   "name": "atop-viewer",
   "version": "0.0.7-beta",
-  "description": "Graphical explorer for Linux atop performance logs",
+  "description": "Desktop GUI for Linux atop historical logs — atop log analyzer and visualizer (requires atop installed)",
+  "keywords": [
+    "atop",
+    "atop-viewer",
+    "atop-log-analyzer",
+    "atop-visualizer",
+    "atop-gui",
+    "linux-monitoring",
+    "electron",
+    "devops",
+    "sre",
+    "sysadmin",
+    "performance"
+  ],
   "main": "out/main/index.js",
   "author": "davidpestana",
   "license": "MIT",
