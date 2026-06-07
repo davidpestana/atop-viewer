@@ -21,6 +21,7 @@ linux:
   executableName: atop-viewer
   executableArgs:
     - --no-sandbox
+    - --ozone-platform=x11
   synopsis: Graphical explorer for Linux atop performance logs
   description: Visualize atop daily logs with system charts, live sampling, process timelines, and filters. Requires atop on the system.
   artifactName: atop-viewer-${version}-${arch}.${ext}

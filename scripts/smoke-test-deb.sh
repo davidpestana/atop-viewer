@@ -14,7 +14,11 @@ fi
 
 DESKTOP=/usr/share/applications/atop-viewer.desktop
 desktop-file-validate "$DESKTOP"
-grep -F -- '--no-sandbox' "$DESKTOP" >/dev/null
+grep -F 'atop-viewer-launcher' "$DESKTOP" >/dev/null || {
+  echo "error: installed desktop entry must launch atop-viewer-launcher" >&2
+  cat "$DESKTOP" >&2
+  exit 1
+}
 
 TARGET="$(readlink -f /usr/bin/atop-viewer)"
 if [ "$TARGET" != '/opt/Atop Viewer/atop-viewer-launcher' ]; then

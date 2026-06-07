@@ -79,9 +79,10 @@ function setupIpcHandlers(): void {
 // Registrar siempre al cargar el módulo (también tras hot-reload del main en dev)
 setupIpcHandlers()
 
-// Linux: chrome-sandbox suele no estar configurado (4755 root) tras npm install
+// Linux: packaged installs need no-sandbox and X11 ozone (Wayland/GTK4 breaks Electron).
 if (process.platform === 'linux') {
   app.commandLine.appendSwitch('no-sandbox')
+  app.commandLine.appendSwitch('ozone-platform', 'x11')
 }
 
 function attachServices(win: BrowserWindow): void {

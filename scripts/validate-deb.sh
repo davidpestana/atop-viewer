@@ -49,13 +49,6 @@ fi
 echo "-- desktop-file-validate"
 desktop-file-validate "$DESKTOP"
 
-echo "-- desktop Exec must include --no-sandbox"
-grep -F -- '--no-sandbox' "$DESKTOP" >/dev/null || {
-  echo "error: desktop Exec missing --no-sandbox" >&2
-  cat "$DESKTOP" >&2
-  exit 1
-}
-
 echo "-- postinst must install launcher wrapper"
 grep -q 'atop-viewer-launcher' "$WORK/postinst" || {
   echo "error: postinst missing launcher script" >&2
@@ -63,6 +56,14 @@ grep -q 'atop-viewer-launcher' "$WORK/postinst" || {
 }
 grep -q 'update-alternatives --set' "$WORK/postinst" || {
   echo "error: postinst must force alternatives to launcher" >&2
+  exit 1
+}
+grep -q 'ozone-platform=x11' "$WORK/postinst" || {
+  echo "error: postinst launcher missing --ozone-platform=x11" >&2
+  exit 1
+}
+grep -q 'env -i' "$WORK/postinst" || {
+  echo "error: postinst launcher must use clean env (env -i)" >&2
   exit 1
 }
 
