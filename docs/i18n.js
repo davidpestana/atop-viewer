@@ -73,7 +73,7 @@ const SITE_MESSAGES = {
     versionLoading: 'Cargando versión…',
     versionLine: (v) => `Última release: ${v} (beta)`,
     versionFallback: 'Versión beta — consulta GitHub Releases',
-    demoCaption: 'Atop Viewer con logs atop reales — el slider recorre las muestras del día.',
+    demoCaption: 'Panel completo — gráficas, mapa de procesos, ciclo de vida y tabla.',
     featuresTitle: 'Características',
     features: [
       'Slider temporal sobre muestras atop (load, CPU, memoria)',

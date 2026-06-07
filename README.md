@@ -36,17 +36,9 @@ The app shells out to `/usr/bin/atop`. It does **not** parse raw `.atop` binarie
 
 ---
 
-## Screenshots
+## Screenshot
 
-![Atop Viewer demo](docs/assets/demo.png)
-
-Regenerate after UI changes (English UI for README/Pages):
-
-```bash
-npm run capture:demo:gif   # writes docs/assets/demo.png (+ optional demo.gif)
-```
-
-Manual option: open the app, use **Peek** / **Flameshot** / **OBS**, or record the window with `ffmpeg`.
+![Atop Viewer — charts, process map, lifecycle, and process table](docs/assets/demo.png)
 
 ---
 
@@ -67,7 +59,7 @@ Download the latest `.deb` from [Releases](https://github.com/davidpestana/atop-
 **Recommended** (avoids apt `_apt` warnings when the file is in `$HOME`):
 
 ```bash
-sudo dpkg -i ~/atop-viewer-0.0.7-beta-amd64.deb
+sudo dpkg -i ~/atop-viewer-*-beta-amd64.deb
 sudo apt -f install   # only if dependencies are missing
 ```
 
@@ -99,7 +91,7 @@ Or open **Atop Viewer** from the GNOME application menu.
 3. Review **system charts** (load, CPU, memory).
 4. Inspect the **process table** for that interval.
 5. Enable **Live** to follow the current day's log (refresh bounded by atop's `LOGINTERVAL`).
-6. Open **Settings** (*UI relevance*) to tune filters and locale.
+6. Open **Settings** (*Display relevance*) to tune filters and locale.
 
 By default, processes below **0.05% CPU** in a sample are hidden. Set **minimum CPU to 0%** to show idle workloads.
 
@@ -123,7 +115,6 @@ By default, processes below **0.05% CPU** in a sample are hidden. Set **minimum 
 - **Default log path** — `/var/log/atop/atop_YYYYMMDD` (system atop layout).
 - **Live refresh** cannot exceed atop's sampling interval (`LOGINTERVAL`, often 600 s).
 - **Beta packaging** — `.deb` / AppImage for amd64; APIs and settings may change.
-- **No built-in telemetry** — project visibility is via GitHub stars / your feedback.
 
 ---
 
@@ -132,15 +123,19 @@ By default, processes below **0.05% CPU** in a sample are hidden. Set **minimum 
 - [ ] Open user-selected log files (not only `/var/log/atop`)
 - [ ] Disk and network charts from atop JSON labels
 - [ ] Export sample / process data (CSV, JSON)
-- [ ] Demo GIF and incident walkthrough article
-- [ ] Mention in [Atoptool](https://github.com/Atoptool/atop) docs / discussions
 - [ ] Stable `1.0` after broader distro testing
 
 ---
 
 ## Development
 
-Requires **Node.js 20+**, npm, and atop.
+### Prerequisites
+
+- **Node.js 20+** and npm
+- **atop** installed with logs under `/var/log/atop/` (needed to exercise the UI)
+- Linux desktop (Electron targets Linux only in this repo)
+
+### Run from source
 
 ```bash
 git clone https://github.com/davidpestana/atop-viewer.git
@@ -149,34 +144,37 @@ npm install
 npm run dev
 ```
 
-If Electron fails from an IDE terminal (GTK/Wayland):
+`npm run dev` wraps Electron with a clean environment (`scripts/run.sh`) to avoid GTK/Wayland crashes on some setups. Equivalent:
 
 ```bash
 bash scripts/run.sh dev
 ```
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Development with hot reload |
-| `npm run build` | Build main, preload, renderer |
-| `npm run dist:linux:check` | Build installers + validate package |
-| `npm run clean:artifacts` | Remove old `dist/` artifacts |
+### Build and package
 
----
+```bash
+npm run build              # compile main, preload, renderer → out/
+npm run preview            # run the built app locally
+npm run dist:linux         # .deb + AppImage → dist/
+npm run dist:linux:check   # build + validate packages (CI uses this)
+npm run clean:artifacts    # remove old dist/ output
+```
 
-## CI/CD
+### Project layout
 
-- **CI** — build + package validation on push/PR.
-- **Release** — tag `v0.0.x-beta` → `.deb` + AppImage + [download page](https://davidpestana.github.io/atop-viewer/) update.
+| Path | Role |
+|------|------|
+| `electron/` | Main process, atop integration, IPC |
+| `electron/atop/` | Calls `atop -r … -J …`, log listing, live watch |
+| `src/` | React renderer (charts, tables, settings) |
+| `build/` | `.desktop`, launcher, Debian postinst |
+| `docs/` | GitHub Pages download site |
+| `.github/workflows/` | CI build and release automation |
 
----
-
-## Keywords
-
-atop viewer · atop log analyzer · atop visualizer · atop gui · linux performance monitoring · atop historical logs · electron linux · devops forensics · sre tooling
+Releases are tagged `v0.0.x` / `v0.0.x-beta`; CI builds installers and updates the [download page](https://davidpestana.github.io/atop-viewer/).
 
 ---
 
 ## License
 
-[MIT](LICENSE) — free and open source.
+[MIT](LICENSE)
