@@ -36,7 +36,9 @@
     "validate:deb": "bash scripts/validate-deb.sh",
     "validate:packages": "bash scripts/validate-packages.sh",
     "dist:linux:check": "npm run dist:linux && npm run validate:packages",
-    "clean:artifacts": "bash scripts/clean-artifacts.sh"
+    "clean:artifacts": "bash scripts/clean-artifacts.sh",
+    "capture:demo": "npm run build && bash scripts/capture-demo.sh",
+    "capture:demo:gif": "npm run build && bash scripts/capture-demo.sh --gif"
   },
   "dependencies": {
     "react": "^19.1.0",

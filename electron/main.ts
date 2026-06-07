@@ -1,5 +1,11 @@
 import { app, BrowserWindow, ipcMain } from 'electron'
 import path from 'node:path'
+import { isCaptureMode, runCaptureMode } from './capture'
+import type { Locale } from '../src/types'
+
+if (isCaptureMode()) {
+  app.setPath('userData', path.join(app.getPath('temp'), 'atop-viewer-capture'))
+}
 import { getAtopConfig } from './atop/config'
 import { AtopLiveService } from './atop/live'
 import { listAtopLogs, loadProcessRows, loadSystemSamples } from './atop/parser'
@@ -13,7 +19,8 @@ const processRegistry = new ProcessRegistryService()
 let logListTimer: NodeJS.Timeout | null = null
 let mainWindow: BrowserWindow | null = null
 
-const gotSingleInstanceLock = app.requestSingleInstanceLock()
+const gotSingleInstanceLock =
+  process.env.ATOP_VIEWER_CAPTURE === '1' || app.requestSingleInstanceLock()
 if (!gotSingleInstanceLock) {
   app.quit()
   process.exit(0)
@@ -142,6 +149,8 @@ function createWindow(): void {
     return
   }
 
+  const captureMode = isCaptureMode()
+
   const win = new BrowserWindow({
     width: 1280,
     height: 820,
@@ -159,30 +168,54 @@ function createWindow(): void {
   mainWindow = win
   wireWindowDiagnostics(win)
 
-  win.once('ready-to-show', () => {
-    win.show()
-    win.focus()
-  })
+  if (captureMode) {
+    win.webContents.once('did-finish-load', () => {
+      attachServices(win)
+      void runCaptureMode(win)
+        .then(() => app.quit())
+        .catch((error) => {
+          console.error('[atop-viewer] capture failed', error)
+          app.exit(1)
+        })
+    })
+    void win.loadFile(path.join(__dirname, '../renderer/index.html'))
+  } else if (process.env.ELECTRON_RENDERER_URL || !app.isPackaged) {
+    win.once('ready-to-show', () => {
+      win.show()
+      win.focus()
+    })
 
-  win.webContents.once('did-finish-load', () => {
-    attachServices(win)
-  })
+    win.webContents.once('did-finish-load', () => {
+      attachServices(win)
+    })
+
+    void loadRenderer(win)
+  } else {
+    win.once('ready-to-show', () => {
+      win.show()
+      win.focus()
+    })
+
+    win.webContents.once('did-finish-load', () => {
+      attachServices(win)
+    })
+
+    void win.loadFile(path.join(__dirname, '../renderer/index.html'))
+  }
 
   win.on('closed', () => {
     mainWindow = null
     detachServices()
   })
-
-  if (process.env.ELECTRON_RENDERER_URL || !app.isPackaged) {
-    void loadRenderer(win)
-  } else {
-    void win.loadFile(path.join(__dirname, '../renderer/index.html'))
-  }
 }
 
 if (gotSingleInstanceLock) {
   app.whenReady().then(async () => {
     await loadSettings()
+    if (isCaptureMode()) {
+      const locale: Locale = process.env.ATOP_VIEWER_CAPTURE_LOCALE === 'es' ? 'es' : 'en'
+      await saveSettings({ locale })
+    }
     createWindow()
 
     if (logListTimer) clearInterval(logListTimer)

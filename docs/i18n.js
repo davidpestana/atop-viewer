@@ -13,7 +13,7 @@ const SITE_MESSAGES = {
     versionLoading: 'Loading version…',
     versionLine: (v) => `Latest release: ${v} (beta)`,
     versionFallback: 'Beta — see GitHub Releases',
-    demoCaption: 'Placeholder UI — replace docs/assets/demo.svg with a recorded demo.gif from the app.',
+    demoCaption: 'Atop Viewer with real atop logs — slider animates through the day’s samples.',
     featuresTitle: 'Features',
     features: [
       'Time slider across atop samples (load, CPU, memory)',
@@ -73,7 +73,7 @@ const SITE_MESSAGES = {
     versionLoading: 'Cargando versión…',
     versionLine: (v) => `Última release: ${v} (beta)`,
     versionFallback: 'Versión beta — consulta GitHub Releases',
-    demoCaption: 'UI de ejemplo — sustituye docs/assets/demo.svg por un demo.gif grabado desde la app.',
+    demoCaption: 'Atop Viewer con logs atop reales — el slider recorre las muestras del día.',
     featuresTitle: 'Características',
     features: [
       'Slider temporal sobre muestras atop (load, CPU, memoria)',

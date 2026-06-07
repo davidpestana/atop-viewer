@@ -38,11 +38,15 @@ The app shells out to `/usr/bin/atop`. It does **not** parse raw `.atop` binarie
 
 ## Screenshots
 
-Record a short demo from the running app and save as [`docs/assets/demo.gif`](docs/assets/demo.gif) for README and GitHub Pages.
+![Atop Viewer demo](docs/assets/demo.gif)
 
-![Atop Viewer — demo placeholder](docs/assets/demo.svg)
+Regenerate after UI changes (English UI for README/Pages):
 
-*Replace `docs/assets/demo.svg` with a real GIF when ready (`ffmpeg` / `peek` / OBS).*
+```bash
+npm run capture:demo:gif   # writes docs/assets/demo.png + demo.gif (locale: en)
+```
+
+Manual option: open the app, use **Peek** / **Flameshot** / **OBS**, or record the window with `ffmpeg`.
 
 ---
 
