@@ -20,9 +20,7 @@ linux:
   maintainer: davidpestana <davidpestana@users.noreply.github.com>
   executableName: atop-viewer
   synopsis: Graphical explorer for Linux atop performance logs
-  description: |
-    Visualize atop daily logs: system charts, live sampling, process timelines,
-    and configurable filters. Requires atop installed on the system.
+  description: Visualize atop daily logs with system charts, live sampling, process timelines, and filters. Requires atop on the system.
   artifactName: atop-viewer-${version}-${arch}.${ext}
 
 deb:
