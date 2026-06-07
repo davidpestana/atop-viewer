@@ -13,7 +13,7 @@ const SITE_MESSAGES = {
     versionLoading: 'Loading version…',
     versionLine: (v) => `Latest release: ${v} (beta)`,
     versionFallback: 'Beta — see GitHub Releases',
-    demoCaption: 'Atop Viewer with real atop logs — slider animates through the day’s samples.',
+    demoCaption: 'Full dashboard — load/CPU charts, process map, lifecycle detail, and process table.',
     featuresTitle: 'Features',
     features: [
       'Time slider across atop samples (load, CPU, memory)',

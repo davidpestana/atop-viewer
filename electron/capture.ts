@@ -16,21 +16,49 @@ async (value) => {
 }
 `
 
+const SELECT_HIGHLIGHT_PROCESS = `
+() => {
+  const row =
+    document.querySelector('.process-table tbody tr.proc-row--alive') ||
+    document.querySelector('.process-table tbody tr')
+  if (!row) return false
+  row.scrollIntoView({ block: 'nearest' })
+  row.click()
+  return true
+}
+`
+
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
-async function waitForCharts(win: BrowserWindow, timeoutMs: number): Promise<boolean> {
+async function waitForDashboard(win: BrowserWindow, timeoutMs: number): Promise<boolean> {
   const started = Date.now()
   while (Date.now() - started < timeoutMs) {
     const ready = await win.webContents.executeJavaScript(
-      'Boolean(document.querySelector(".charts")) && !document.querySelector(".loading")',
+      `Boolean(
+        document.querySelector(".charts") &&
+        document.querySelector(".process-table tbody tr") &&
+        !document.querySelector(".loading")
+      )`,
       true
     )
     if (ready) return true
     await sleep(500)
   }
   return false
+}
+
+async function fitWindowToContent(win: BrowserWindow): Promise<void> {
+  const { width, height } = await win.webContents.executeJavaScript(
+    `({
+      width: Math.max(1280, document.documentElement.scrollWidth),
+      height: Math.min(2400, Math.max(820, document.documentElement.scrollHeight))
+    })`,
+    true
+  )
+  win.setContentSize(width, height)
+  await sleep(300)
 }
 
 async function writePng(win: BrowserWindow, targetPath: string): Promise<void> {
@@ -68,12 +96,15 @@ export async function runCaptureMode(win: BrowserWindow): Promise<void> {
   const gifPath = process.env.ATOP_VIEWER_CAPTURE_GIF
   const framesDir = path.join(path.dirname(pngPath), '.demo-frames')
 
-  const ready = await waitForCharts(win, 120_000)
+  const ready = await waitForDashboard(win, 120_000)
   if (!ready) {
-    throw new Error('Timed out waiting for charts — is atop installed and /var/log/atop readable?')
+    throw new Error('Timed out waiting for dashboard — is atop installed and /var/log/atop readable?')
   }
 
-  await sleep(1500)
+  await win.webContents.executeJavaScript(`(${SELECT_HIGHLIGHT_PROCESS})()`, true)
+  await sleep(1200)
+  await fitWindowToContent(win)
+  await sleep(800)
   await writePng(win, pngPath)
 
   if (!gifPath) return

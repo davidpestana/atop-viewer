@@ -38,12 +38,12 @@ The app shells out to `/usr/bin/atop`. It does **not** parse raw `.atop` binarie
 
 ## Screenshots
 
-![Atop Viewer demo](docs/assets/demo.gif)
+![Atop Viewer demo](docs/assets/demo.png)
 
 Regenerate after UI changes (English UI for README/Pages):
 
 ```bash
-npm run capture:demo:gif   # writes docs/assets/demo.png + demo.gif (locale: en)
+npm run capture:demo:gif   # writes docs/assets/demo.png (+ optional demo.gif)
 ```
 
 Manual option: open the app, use **Peek** / **Flameshot** / **OBS**, or record the window with `ffmpeg`.
