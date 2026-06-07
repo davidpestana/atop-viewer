@@ -28,6 +28,16 @@ linux:
 deb:
   depends:
     - atop
+    - libgtk-3-0 | libgtk-3-0t64
+    - libnss3
+    - libxss1
+    - libxtst6
+    - libatk1.0-0 | libatk1.0-0t64
+    - libatspi2.0-0 | libatspi2.0-0t64
+    - libdrm2
+    - libgbm1
+    - libasound2 | libasound2t64
+    - xdg-utils
   afterInstall: build/after-install.sh
 
 publish: null

@@ -98,6 +98,24 @@ bash scripts/run.sh dev
 | `npm run build` | Build main, preload, and renderer |
 | `npm start` | Run local production build |
 | `npm run dist:linux` | Build `.deb` and `.AppImage` in `dist/` |
+| `npm run validate:packages` | Validate built installers (desktop file, postinst, Docker smoke test) |
+| `npm run dist:linux:check` | Build + validate before publishing or manual install |
+
+### Validate a `.deb` before installing
+
+Build and run automated checks (including a clean Ubuntu container install + launch under Xvfb):
+
+```bash
+npm run dist:linux:check
+```
+
+Or validate an existing package:
+
+```bash
+npm run validate:deb -- dist/atop-viewer-0.0.4-beta-amd64.deb
+```
+
+CI runs the same validation on every push; releases are blocked if it fails.
 
 ## CI/CD and beta releases
 
