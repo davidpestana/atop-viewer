@@ -52,7 +52,6 @@ const SITE_MESSAGES = {
       'Open user-selected log files',
       'Disk and network charts',
       'Export CSV/JSON',
-      'Incident walkthrough article + demo GIF',
       'Stable 1.0 after wider testing'
     ],
     license: (url) => `License <a href="${url}">MIT</a>.`,
@@ -112,7 +111,6 @@ const SITE_MESSAGES = {
       'Abrir ficheros de log elegidos por el usuario',
       'Gráficas de disco y red',
       'Exportar CSV/JSON',
-      'Artículo de incidente + GIF demo',
       'Estable 1.0 tras más pruebas en distros'
     ],
     license: (url) => `Licencia <a href="${url}">MIT</a>.`,
@@ -144,6 +142,7 @@ function renderList(id, items) {
 
 function applySiteLocale(locale) {
   const t = SITE_MESSAGES[locale]
+  if (!t) return
   document.documentElement.lang = t.htmlLang
   document.title = t.pageTitle
 
@@ -195,6 +194,11 @@ function applySiteLocale(locale) {
   document.getElementById('license-line').innerHTML = t.license(
     'https://github.com/davidpestana/atop-viewer/blob/master/LICENSE'
   )
+
+  const versionLine = document.getElementById('version-line')
+  if (versionLine && !versionLine.dataset.loaded) {
+    versionLine.textContent = t.versionLoading
+  }
 
   for (const btn of document.querySelectorAll('[data-locale]')) {
     btn.setAttribute('aria-pressed', btn.dataset.locale === locale ? 'true' : 'false')

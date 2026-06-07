@@ -17,37 +17,62 @@
   <body>
     <main class="page">
       <nav class="lang-switch" aria-label="Language">
-        <button type="button" data-locale="en" aria-pressed="false">EN</button>
+        <button type="button" data-locale="en" aria-pressed="true">EN</button>
         <button type="button" data-locale="es" aria-pressed="false">ES</button>
       </nav>
 
       <header class="hero">
         <p id="badge" class="badge">Beta · Linux desktop · MIT</p>
         <h1>Atop Viewer</h1>
-        <p id="tagline" class="tagline"></p>
-        <p id="lead" class="lead"></p>
+        <p id="tagline" class="tagline">
+          Desktop GUI for Linux atop historical logs — not a browser app.
+        </p>
+        <p id="lead" class="lead">
+          Explore daily <a href="https://www.atoptool.nl/">atop</a> logs with charts, live refresh,
+          process tables, and timelines. Uses <code>atop -r -J</code> on your machine — data never
+          leaves your system.
+        </p>
         <p id="version-line" class="version">Loading version…</p>
       </header>
 
       <figure class="demo">
-        <img id="demo-img" src="assets/demo.png" alt="" width="960" height="540" loading="lazy" />
-        <figcaption id="demo-caption"></figcaption>
+        <img
+          id="demo-img"
+          src="assets/demo.png"
+          alt="Atop Viewer — Linux atop log analyzer (desktop app)"
+          width="960"
+          height="540"
+          loading="lazy"
+        />
+        <figcaption id="demo-caption">
+          Full dashboard — load/CPU charts, process map, lifecycle detail, and process table.
+        </figcaption>
       </figure>
 
       <section class="card">
         <h2 id="features-title">Features</h2>
-        <ul id="features-list" class="feature-list"></ul>
+        <ul id="features-list" class="feature-list">
+          <li>Time slider across atop samples (load, CPU, memory)</li>
+          <li>Process table with live / terminated / PID-reused status</li>
+          <li>Live mode when atop writes new samples</li>
+          <li>Process heatmap, stack, and lifecycle views</li>
+          <li>Configurable CPU filter and ES/EN UI</li>
+          <li>Local-only — no upload server</li>
+        </ul>
       </section>
 
       <section class="card">
         <h2 id="how-title">How it works</h2>
-        <pre id="how-code" class="code-block"><code></code></pre>
-        <p id="how-note" class="hint"></p>
+        <pre id="how-code" class="code-block"><code>/var/log/atop/atop_YYYYMMDD  →  atop -r LOG -J JSON  →  Atop Viewer</code></pre>
+        <p id="how-note" class="hint">
+          Requires <code>atop</code> installed (<code>sudo apt install atop</code>). Does not parse
+          binary logs in the browser and does not need <code>atop -P</code>.
+        </p>
       </section>
 
       <section class="card">
         <h2 id="download-title">Download</h2>
-        <p id="download-hint" class="hint"></p>
+        <p id="download-hint" class="hint">Linux amd64 · requires atop on the system.</p>
         <div id="downloads" class="downloads">
           <p id="downloads-loading">Loading installers…</p>
         </div>
@@ -55,31 +80,50 @@
           <span id="also-on">Also on</span>
           <a id="release-link" href="https://github.com/davidpestana/atop-viewer/releases"
             >GitHub Releases</a
-          > ·
+          >
+          ·
           <a id="readme-link" href="https://github.com/davidpestana/atop-viewer#readme">README</a>
         </p>
       </section>
 
       <section class="card">
         <h2 id="install-deb-title">Install on Ubuntu / Debian</h2>
-        <pre id="install-deb-code" class="code-block"><code></code></pre>
-        <p id="install-deb-note" class="hint"></p>
+        <pre id="install-deb-code" class="code-block"><code>sudo dpkg -i ~/atop-viewer-VERSION-amd64.deb
+sudo apt -f install   # if needed
+atop-viewer</code></pre>
+        <p id="install-deb-note" class="hint">
+          Prefer <code>dpkg -i</code> when the file is in <code>$HOME</code>. Replace VERSION with
+          the downloaded beta tag.
+        </p>
       </section>
 
       <section class="card">
         <h2 id="install-appimage-title">Other Linux distributions</h2>
-        <pre id="install-appimage-code" class="code-block"><code></code></pre>
-        <p id="install-appimage-note" class="hint"></p>
+        <pre id="install-appimage-code" class="code-block"><code>chmod +x atop-viewer-VERSION-x86_64.AppImage
+./atop-viewer-VERSION-x86_64.AppImage</code></pre>
+        <p id="install-appimage-note" class="hint">
+          Portable AppImage — still needs atop and often libfuse2.
+        </p>
       </section>
 
       <section class="card">
-        <h2 id="limits-title">Limitations</h2>
-        <ul id="limits-list" class="feature-list"></ul>
+        <h2 id="limits-title">Limitations (beta)</h2>
+        <ul id="limits-list" class="feature-list">
+          <li>Linux desktop only (Electron), not a web UI</li>
+          <li>Reads system atop logs under /var/log/atop by default</li>
+          <li>Live refresh bounded by atop LOGINTERVAL (often 10 min)</li>
+          <li>amd64 installers; beta APIs may change</li>
+        </ul>
       </section>
 
       <section class="card">
         <h2 id="roadmap-title">Roadmap</h2>
-        <ul id="roadmap-list" class="feature-list roadmap"></ul>
+        <ul id="roadmap-list" class="feature-list roadmap">
+          <li>Open user-selected log files</li>
+          <li>Disk and network charts</li>
+          <li>Export CSV/JSON</li>
+          <li>Stable 1.0 after wider testing</li>
+        </ul>
       </section>
 
       <footer class="footer">
@@ -89,7 +133,7 @@
         </p>
       </footer>
     </main>
-    <script src="i18n.js"></script>
-    <script src="site.js"></script>
+    <script src="i18n.js?v=2"></script>
+    <script src="site.js?v=2"></script>
   </body>
 </html>

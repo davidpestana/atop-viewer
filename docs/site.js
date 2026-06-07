@@ -7,6 +7,7 @@ function renderDownloads(data) {
   const releaseLink = document.getElementById('release-link')
 
   versionLine.textContent = t.versionLine(data.version)
+  versionLine.dataset.loaded = '1'
   releaseLink.href = data.releasePage || RELEASES_URL
 
   const labels = {
