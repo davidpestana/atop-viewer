@@ -1,6 +1,6 @@
 {
   "name": "atop-viewer",
-  "version": "0.0.2-beta",
+  "version": "0.0.3-beta",
   "description": "Graphical explorer for Linux atop performance logs",
   "main": "out/main/index.js",
   "author": "davidpestana",
