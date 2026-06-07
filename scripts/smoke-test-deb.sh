@@ -14,8 +14,8 @@ fi
 
 DESKTOP=/usr/share/applications/atop-viewer.desktop
 desktop-file-validate "$DESKTOP"
-grep -F 'atop-viewer-launcher' "$DESKTOP" >/dev/null || {
-  echo "error: installed desktop entry must launch atop-viewer-launcher" >&2
+grep -F 'Exec="/opt/Atop Viewer/atop-viewer-launcher"' "$DESKTOP" >/dev/null || {
+  echo "error: installed desktop Exec path with spaces must be quoted" >&2
   cat "$DESKTOP" >&2
   exit 1
 }

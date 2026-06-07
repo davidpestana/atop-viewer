@@ -32,11 +32,27 @@ grep LOGINTERVAL /etc/default/atop
 ### Ubuntu / Debian (.deb)
 
 1. Download the `.deb` from [GitHub Pages](https://davidpestana.github.io/atop-viewer/) or [Releases](https://github.com/davidpestana/atop-viewer/releases).
-2. Install:
+2. Install (recommended — avoids apt `_apt` noise when the file is in `$HOME`):
 
 ```bash
-sudo apt install ./atop-viewer-0.0.1-beta-amd64.deb
+sudo dpkg -i ~/atop-viewer-0.0.6-beta-amd64.deb
+sudo apt -f install   # only if dpkg reports missing dependencies
 ```
+
+Alternative:
+
+```bash
+cp ~/atop-viewer-0.0.6-beta-amd64.deb /tmp/
+sudo apt install /tmp/atop-viewer-0.0.6-beta-amd64.deb
+```
+
+**Note:** `sudo apt install ./file.deb` from your home directory may print:
+
+```text
+Información: ... el usuario '_apt' ... Permiso denegado
+```
+
+That is **not a failed install**. Apt cannot sandbox-read `$HOME` (mode `750`), falls back to root, and the package still configures — look for `Configurando atop-viewer` and `ii` in `dpkg -l atop-viewer`. Prefer `dpkg -i` above.
 
 3. Launch the app:
 

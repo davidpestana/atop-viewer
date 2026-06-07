@@ -1,9 +1,9 @@
 [Desktop Entry]
 Name=Atop Viewer
 Comment=Graphical explorer for Linux atop performance logs
-Exec=/opt/Atop Viewer/atop-viewer-launcher %U
+Exec="/opt/Atop Viewer/atop-viewer-launcher" %U
 Terminal=false
 Type=Application
 Icon=atop-viewer
-Categories=System;Monitor;
+Categories=System;Utility;
 StartupWMClass=Atop Viewer

@@ -50,8 +50,8 @@ echo "-- desktop-file-validate"
 desktop-file-validate "$DESKTOP"
 
 echo "-- desktop must launch wrapper (not raw binary)"
-grep -F 'atop-viewer-launcher' "$DESKTOP" >/dev/null || {
-  echo "error: packaged desktop must Exec atop-viewer-launcher" >&2
+grep -F 'Exec="/opt/Atop Viewer/atop-viewer-launcher"' "$DESKTOP" >/dev/null || {
+  echo "error: desktop Exec path with spaces must be quoted" >&2
   cat "$DESKTOP" >&2
   exit 1
 }
