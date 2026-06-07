@@ -1,0 +1,14 @@
+#!/bin/sh
+exec env -i \
+  HOME="$HOME" \
+  USER="${USER:-$(id -un)}" \
+  LOGNAME="${LOGNAME:-$(id -un)}" \
+  SHELL="${SHELL:-/bin/sh}" \
+  PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" \
+  DISPLAY="${DISPLAY:-:0}" \
+  XAUTHORITY="${XAUTHORITY:-}" \
+  WAYLAND_DISPLAY="${WAYLAND_DISPLAY:-}" \
+  XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}" \
+  DBUS_SESSION_BUS_ADDRESS="${DBUS_SESSION_BUS_ADDRESS:-unix:path=${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/bus}" \
+  LANG="${LANG:-C.UTF-8}" \
+  "/opt/Atop Viewer/atop-viewer" --no-sandbox --ozone-platform=x11 "$@"

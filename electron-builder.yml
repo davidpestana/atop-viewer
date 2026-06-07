@@ -12,6 +12,8 @@ files:
 
 asar: true
 
+afterPack: scripts/after-pack.cjs
+
 linux:
   target:
     - deb

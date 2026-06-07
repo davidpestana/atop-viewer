@@ -49,21 +49,26 @@ fi
 echo "-- desktop-file-validate"
 desktop-file-validate "$DESKTOP"
 
-echo "-- postinst must install launcher wrapper"
+echo "-- desktop must launch wrapper (not raw binary)"
+grep -F 'atop-viewer-launcher' "$DESKTOP" >/dev/null || {
+  echo "error: packaged desktop must Exec atop-viewer-launcher" >&2
+  cat "$DESKTOP" >&2
+  exit 1
+}
+
+echo "-- launcher script shipped in package"
+LAUNCHER="$(find "$WORK" -path '*/Atop Viewer/atop-viewer-launcher' | head -1)"
+[ -n "$LAUNCHER" ] || { echo "error: atop-viewer-launcher missing from package" >&2; exit 1; }
+grep -q 'env -i' "$LAUNCHER" || { echo "error: launcher must use env -i" >&2; exit 1; }
+grep -q 'ozone-platform=x11' "$LAUNCHER" || { echo "error: launcher must pass --ozone-platform=x11" >&2; exit 1; }
+
+echo "-- postinst must register launcher in PATH"
 grep -q 'atop-viewer-launcher' "$WORK/postinst" || {
-  echo "error: postinst missing launcher script" >&2
+  echo "error: postinst missing launcher registration" >&2
   exit 1
 }
 grep -q 'update-alternatives --set' "$WORK/postinst" || {
   echo "error: postinst must force alternatives to launcher" >&2
-  exit 1
-}
-grep -q 'ozone-platform=x11' "$WORK/postinst" || {
-  echo "error: postinst launcher missing --ozone-platform=x11" >&2
-  exit 1
-}
-grep -q 'env -i' "$WORK/postinst" || {
-  echo "error: postinst launcher must use clean env (env -i)" >&2
   exit 1
 }
 
