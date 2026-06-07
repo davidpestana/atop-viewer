@@ -1,0 +1,32 @@
+appId: com.davidpestana.atop-viewer
+productName: Atop Viewer
+copyright: Copyright © 2026 davidpestana
+
+directories:
+  output: dist
+  buildResources: build
+
+files:
+  - out/**/*
+  - package.json
+
+asar: true
+
+linux:
+  target:
+    - deb
+    - AppImage
+  category: System
+  maintainer: davidpestana <davidpestana@users.noreply.github.com>
+  executableName: atop-viewer
+  synopsis: Graphical explorer for Linux atop performance logs
+  description: |
+    Visualize atop daily logs: system charts, live sampling, process timelines,
+    and configurable filters. Requires atop installed on the system.
+  artifactName: atop-viewer-${version}-${arch}.${ext}
+
+deb:
+  depends:
+    - atop
+
+publish: null

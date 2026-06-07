@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Atop Viewer — Descargas</title>
+    <meta
+      name="description"
+      content="Explorador gráfico de logs atop para Linux. Instaladores .deb y AppImage."
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="hero">
+        <p class="badge">Beta · software libre (MIT)</p>
+        <h1>Atop Viewer</h1>
+        <p class="lead">
+          Visualiza logs diarios de <a href="https://www.atoptool.nl/">atop</a>: gráficas de
+          sistema, modo en vivo, procesos y líneas temporales.
+        </p>
+        <p id="version-line" class="version">Cargando versión…</p>
+      </header>
+
+      <section class="card">
+        <h2>Descargar</h2>
+        <p class="hint">
+          Requiere <code>atop</code> instalado en el sistema (<code>sudo apt install atop</code>).
+        </p>
+        <div id="downloads" class="downloads">
+          <p>Cargando instaladores…</p>
+        </div>
+        <p class="meta">
+          También en
+          <a id="release-link" href="https://github.com/davidpestana/atop-viewer/releases"
+            >GitHub Releases</a
+          >.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Instalar en Ubuntu / Debian</h2>
+        <pre><code>sudo apt install ./atop-viewer-VERSION-amd64.deb
+atop-viewer</code></pre>
+        <p>
+          Sustituye <code>VERSION</code> por la versión descargada. El paquete declara dependencia de
+          <code>atop</code>.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Otras distribuciones Linux</h2>
+        <pre><code>chmod +x atop-viewer-VERSION-x86_64.AppImage
+./atop-viewer-VERSION-x86_64.AppImage</code></pre>
+        <p>
+          AppImage no requiere instalación. Asegúrate de tener <code>atop</code> y FUSE/libfuse2 según
+          tu distro.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Código fuente y desarrollo</h2>
+        <p>
+          Repositorio:
+          <a href="https://github.com/davidpestana/atop-viewer">github.com/davidpestana/atop-viewer</a>
+        </p>
+        <pre><code>git clone https://github.com/davidpestana/atop-viewer.git
+cd atop-viewer
+npm install
+npm run dev</code></pre>
+      </section>
+
+      <footer class="footer">
+        <p>Licencia <a href="https://github.com/davidpestana/atop-viewer/blob/main/LICENSE">MIT</a>.</p>
+      </footer>
+    </main>
+    <script src="site.js"></script>
+  </body>
+</html>

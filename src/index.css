@@ -1,0 +1,419 @@
+:root {
+  color-scheme: dark;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #e8eaed;
+  background: #0f1117;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+button,
+select {
+  font: inherit;
+}
+
+.app {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 1rem;
+  min-height: 100vh;
+  padding: 1rem 1.25rem 1.25rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 650;
+}
+
+.header p {
+  margin: 0.15rem 0 0;
+  color: #9aa0a6;
+  font-size: 0.85rem;
+}
+
+.lang-switch {
+  display: inline-flex;
+  border: 1px solid #2a2f3a;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.lang-switch button {
+  background: #12141c;
+  border: 0;
+  color: #9aa0a6;
+  padding: 0.3rem 0.55rem;
+  cursor: pointer;
+}
+
+.lang-switch button.active {
+  background: #2a4070;
+  color: #e8eaed;
+}
+
+.panel-meta {
+  color: #9aa0a6;
+  font-size: 0.82rem;
+}
+
+.settings summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #c4c7ce;
+  user-select: none;
+}
+
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.settings-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  color: #9aa0a6;
+}
+
+.settings-value {
+  color: #e8eaed;
+  font-size: 0.85rem;
+}
+
+.settings-path {
+  margin: 0.75rem 0 0;
+  font-size: 0.75rem;
+  color: #9aa0a6;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.settings-path code {
+  color: #8ab4f8;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.live-badge {
+  font-size: 0.8rem;
+  color: #9aa0a6;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid #2a2f3a;
+  background: #12141c;
+}
+
+.live-badge--on {
+  color: #81c995;
+  border-color: #3d5a44;
+}
+
+button.secondary {
+  background: #12141c;
+  border: 1px solid #2a2f3a;
+  color: #c4c7ce;
+  border-radius: 8px;
+  padding: 0.35rem 0.75rem;
+  cursor: pointer;
+}
+
+.controls .toggle {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.45rem;
+  color: #c4c7ce;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.controls label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+  color: #9aa0a6;
+}
+
+.controls select,
+.controls input[type='range'] {
+  min-width: 220px;
+}
+
+.panel {
+  background: #171923;
+  border: 1px solid #2a2f3a;
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.charts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.chart-title {
+  margin: 0 0 0.75rem;
+  font-size: 0.95rem;
+  color: #c4c7ce;
+}
+
+.panel-heading {
+  margin-bottom: 0.75rem;
+}
+
+.panel-heading .chart-title {
+  margin-bottom: 0.35rem;
+}
+
+.panel-subtitle {
+  margin: 0;
+  color: #9aa0a6;
+  font-size: 0.82rem;
+}
+
+.proc-status {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+}
+
+.proc-status--alive {
+  color: #81c995;
+  background: #1a2e22;
+  border-color: #3d5a44;
+}
+
+.proc-status--dead {
+  color: #9aa0a6;
+  background: #1a1d24;
+  border-color: #2a2f3a;
+}
+
+.proc-status--reused {
+  color: #fdd663;
+  background: #2e2a18;
+  border-color: #5a5230;
+}
+
+.proc-row--dead td:not(:first-child) {
+  opacity: 0.72;
+}
+
+.timeline {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.timeline-meta {
+  display: flex;
+  justify-content: space-between;
+  color: #9aa0a6;
+  font-size: 0.85rem;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.stat {
+  background: #12141c;
+  border: 1px solid #2a2f3a;
+  border-radius: 10px;
+  padding: 0.75rem 0.9rem;
+}
+
+.stat-label {
+  color: #9aa0a6;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.stat-value {
+  margin-top: 0.25rem;
+  font-size: 1.2rem;
+  font-weight: 650;
+}
+
+.process-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.process-table th,
+.process-table td {
+  padding: 0.45rem 0.6rem;
+  border-bottom: 1px solid #2a2f3a;
+  text-align: left;
+}
+
+.process-table th {
+  color: #9aa0a6;
+  font-weight: 600;
+}
+
+.process-table td.num {
+  font-variant-numeric: tabular-nums;
+}
+
+.error {
+  background: #3b1f24;
+  border: 1px solid #8b3a42;
+  color: #ffb4ab;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+}
+
+.loading {
+  color: #9aa0a6;
+}
+
+.empty-state {
+  color: #c4c7ce;
+}
+
+.empty-state code {
+  color: #8ab4f8;
+}
+
+.proc-row {
+  cursor: pointer;
+}
+
+.proc-row--selected {
+  background: #1a2233;
+}
+
+.timeline-panel {
+  display: grid;
+  gap: 1rem;
+}
+
+.panel-heading--row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.metric-toggle {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.metric-toggle button.active {
+  background: #2a4070;
+  border: 1px solid #8ab4f8;
+  color: #e8eaed;
+  border-radius: 8px;
+  padding: 0.35rem 0.75rem;
+  cursor: pointer;
+}
+
+.heatmap-wrap {
+  overflow: auto;
+  max-height: 420px;
+}
+
+.heatmap {
+  border-collapse: collapse;
+  font-size: 0.78rem;
+  min-width: 100%;
+}
+
+.heatmap th,
+.heatmap td {
+  border: 1px solid #2a2f3a;
+  padding: 0;
+}
+
+.heatmap thead th {
+  color: #9aa0a6;
+  font-weight: 600;
+  padding: 0.35rem 0.45rem;
+  white-space: nowrap;
+  background: #12141c;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.heatmap tbody th {
+  text-align: left;
+  padding: 0.35rem 0.5rem;
+  background: #12141c;
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  min-width: 140px;
+}
+
+.heatmap tbody td {
+  width: 28px;
+  min-width: 28px;
+  height: 22px;
+}
+
+.heatmap-row--selected th {
+  background: #1a2233;
+}
+
+.heatmap-now {
+  outline: 1px solid #e8eaed;
+  outline-offset: -1px;
+}
+
+.heatmap-label {
+  display: block;
+  color: #e8eaed;
+}
+
+.heatmap-meta {
+  display: block;
+  color: #9aa0a6;
+  font-size: 0.7rem;
+}
+
+@media (max-width: 960px) {
+  .charts,
+  .stats {
+    grid-template-columns: 1fr;
+  }
+}
